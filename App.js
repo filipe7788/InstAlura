@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Image, Dimensions, FlatList, Platform } from 'react-native';
 import Post from './src/component/Post'
 
 const width = Dimensions.get('screen').width
@@ -19,6 +19,34 @@ export default class App extends React.Component {
       .then(json => this.setState({fotos: json}))
 
   }
+
+  like(idFoto){
+    const { foto } = this.state.fotos.find(foto => foto.id === idFoto.id)
+
+    let novaLista = []
+
+    if(!foto.likeada){
+      novaLista = [
+        ...foto.likers,
+        {login: 'meuUsuario'}
+      ]
+    } else {
+      novaLista = foto.likers.filter(liker => {
+        return liker.login !== 'meuUsuario'
+      })
+    }
+  
+    const fotoAtualizada = {
+      ...foto,
+      likeada: !foto.likeada,
+      likers: novaLista
+    }
+
+    const fotos = this.state.fotos.map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
+
+    this.setState({ fotos })
+  }
+
   
   render() {
     return (
@@ -27,15 +55,17 @@ export default class App extends React.Component {
         keyExtractor={item => item.id}
         data= {this.state.fotos}
         renderItem= { ({item}) =>
-          <Post foto={ item }/>
+          <Post likeCallBack={this.like.bind(this)} foto={ item }/>
         }
       />
     );
   }
 }
 
+const margin = Platform.OS == 'ios' ? 50 : 20;
+
 const estilos = StyleSheet.create({
     container: {
-      marginTop: 50
+      marginTop: margin
     }
 })
