@@ -21,7 +21,7 @@ export default class App extends React.Component {
   }
 
   like(idFoto){
-    const { foto } = this.state.fotos.find(foto => foto.id === idFoto.id)
+    const  foto  = this.state.fotos.find(foto => foto.id === idFoto.id)
 
     let novaLista = []
 

@@ -31,15 +31,15 @@ export default class Post extends React.Component {
     if(valorComentario === '')
       return;
 
-    const  novaLista = [...this.state.foto.comentarios, {
+    const  novaLista = [...this.props.foto.comentarios, {
       id: valorComentario,
       login: 'meuUsuario',
       texto: valorComentario
     }]
 
     const fotoAtualizada = {
-      ...this.state.foto,
-     ...this.state.foto.comentarios = novaLista
+      ...this.props.foto,
+     ...this.props.foto.comentarios = novaLista
     }
     this.setState({foto: fotoAtualizada})
     inputComentario.clear()
