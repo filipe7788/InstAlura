@@ -15,12 +15,13 @@ export default class InputComentario extends React.Component {
             <TextInput style={estilos.input} placeholder='Adicione um comentário...' 
                     onChangeText={texto => this.setState({valorComentario: texto})} 
                     ref={input => this.inputComentario = input}></TextInput>
-
-            <TouchableOpacity onPress={() => {
-                this.props.comentarioCallBack(this.state.valorComentario, this.inputComentario)
-                this.setState({valorComentario:''})
-            }}>
-                <Image style={estilos.imagem} source={require('../../assets/send.png')}></Image>
+                    <TouchableOpacity onPress={() => {
+                        this.props.comentarioCallBack(this.props.idFoto,
+                            this.state.valorComentario, this.inputComentario)
+                        this.setState({valorComentario:''})
+                        }}>
+                          <Image style={estilos.imagem}
+                              source={require('../../assets/send.png')} />
             </TouchableOpacity>
         
         </View>
